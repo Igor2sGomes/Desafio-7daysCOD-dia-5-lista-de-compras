@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Compras</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    select, input, button {
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .categoria {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h2>🛒 Adicionar à Lista de Compras</h2>
+
+  <label for="comida">Nome da comida:</label><br>
+  <input type="text" id="comida" placeholder="Ex: batata"><br>
+
+  <label for="categoria">Escolha a categoria:</label><br>
+  <select id="categoria">
+    <option value="frutas">Frutas</option>
+    <option value="laticinios">Laticínios</option>
+    <option value="congelados">Congelados</option>
+    <option value="doces">Doces</option>
+    <option value="legumes">Legumes</option>
+    <option value="bebidas">Bebidas</option>
+    <option value="outros">Outros</option>
+  </select><br>
+
+  <button onclick="adicionarItem()">Adicionar</button>
+  <button onclick="exibirLista()">Finalizar e Exibir Lista</button>
+
+  <div id="listaFinal" class="categoria"></div>
+
+  <script>
+    const listaDeCompras = {
+      frutas: [],
+      laticinios: [],
+      congelados: [],
+      doces: [],
+      legumes: [],
+      bebidas: [],
+      outros: []
+    };
+
+    function adicionarItem() {
+      const comida = document.getElementById("comida").value.trim();
+      const categoria = document.getElementById("categoria").value;
+
+      if (comida === "") {
+        alert("Por favor, digite o nome da comida.");
+        return;
+      }
+
+      listaDeCompras[categoria].push(comida);
+      alert(`"${comida}" foi adicionada à categoria "${categoria}".`);
+      document.getElementById("comida").value = "";
+    }
+
+    function exibirLista() {
+      const listaDiv = document.getElementById("listaFinal");
+      listaDiv.innerHTML = "<h3>📋 Lista Final:</h3>";
+
+      for (let categoria in listaDeCompras) {
+        if (listaDeCompras[categoria].length > 0) {
+          let titulo = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+          listaDiv.innerHTML += `<strong>${titulo}:</strong><ul>`;
+          listaDeCompras[categoria].forEach(item => {
+            listaDiv.innerHTML += `<li>${item}</li>`;
+          });
+          listaDiv.innerHTML += `</ul>`;
+        }
+      }
+    }
+  </script>
+</body>
+</html>
