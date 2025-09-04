@@ -1,5 +1,7 @@
 //lista de compras inicial
 let listaDeCompras = {
+    carnes: [],
+    nãoPereciveis: [],
     frutas:[], 
     laticinios:[], 
     congelados:[], 
