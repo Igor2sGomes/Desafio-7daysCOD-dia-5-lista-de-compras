@@ -1,108 +1,94 @@
-// Lista de compras inicial
-let listaDeCompras = {
-  carnes: [],
-  naoPereciveis: [],
-  frutas: [],
-  laticinios: [],
-  congelados: [],
-  doces: [],
-  legumes: [],
-  bebidas: [],
-  outros: []
-};
+document.addEventListener('DOMContentLoaded', () => {
+  const btnAdicionar = document.getElementById('btnAdicionar');
+  const btnRemover = document.getElementById('btnRemover');
+  const btnExibir = document.getElementById('btnExibir');
+  const comidaInput = document.getElementById('comida');
+  const categoriaSelect = document.getElementById('categoria');
+  const mensagem = document.getElementById('mensagem');
+  const listaFinal = document.getElementById('listaFinal');
 
-// Função para exibir a lista final agrupada
-function exibirLista() {
-  let resultado = "📋 Lista de Compras Atual:\n\n";
+  let listaDeCompras = {
+    carnes: [],
+    naoPereciveis: [],
+    frutas: [],
+    laticinios: [],
+    congelados: [],
+    doces: [],
+    legumes: [],
+    bebidas: [],
+    outros: []
+  };
 
-  for (let categoria in listaDeCompras) {
-    if (listaDeCompras[categoria].length > 0) {
-      let titulo = categoria
-        .replace(/([A-Z])/g, " $1")
-        .replace(/^./, str => str.toUpperCase());
+  btnAdicionar.addEventListener('click', () => {
+    const comida = comidaInput.value.trim();
+    const categoria = categoriaSelect.value;
 
-      resultado += `${titulo}:\n`;
-      listaDeCompras[categoria].forEach(item => {
-        resultado += `- ${item}\n`;
-      });
-      resultado += "\n";
-    }
-  }
-
-  if (resultado === "📋 Lista de Compras Atual:\n\n") {
-    return "🛒 A lista está vazia!";
-  }
-
-  return resultado;
-}
-
-// Função para verificar se existe pelo menos 1 item
-function listaNaoVazia() {
-  return Object.values(listaDeCompras).some(arr => arr.length > 0);
-}
-
-// Loop principal
-while (true) {
-  let desejaFazer = prompt(
-    "Você deseja:\n" +
-    "- adicionar uma comida (digite: adicionar)\n" +
-    (listaNaoVazia() ? "- remover uma comida (digite: remover)\n" : "") +
-    "- sair (digite: sair)"
-  );
-
-  if (!desejaFazer || desejaFazer.toLowerCase() === "sair") {
-    alert(exibirLista());
-    break;
-  }
-
-  if (desejaFazer.toLowerCase() === "adicionar") {
-    let comida = prompt("Qual comida você deseja adicionar?");
-
-    let categoria = prompt(
-      "Em qual categoria essa comida se encaixa?\n\n" +
-      "Escolha entre:\n" +
-      "- carnes\n" +
-      "- naoPereciveis\n" +
-      "- frutas\n" +
-      "- laticinios\n" +
-      "- congelados\n" +
-      "- doces\n" +
-      "- legumes\n" +
-      "- bebidas\n" +
-      "- outros"
-    ).toLowerCase();
-
-    if (listaDeCompras.hasOwnProperty(categoria)) {
-      listaDeCompras[categoria].push(comida);
-    } else {
-      alert("⚠️ Categoria não reconhecida. Adicionando em 'outros'.");
-      listaDeCompras.outros.push(comida);
+    if (comida === '') {
+      mensagem.textContent = 'Por favor, insira o nome da comida.';
+      return;
     }
 
-    alert(`✅ "${comida}" foi adicionada à categoria "${categoria}".`);
-  }
+    listaDeCompras[categoria].push(comida);
+    mensagem.textContent = `"${comida}" foi adicionado à categoria "${categoria}".`;
+    comidaInput.value = '';
+    exibirLista();
+  });
 
-  else if (desejaFazer.toLowerCase() === "remover" && listaNaoVazia()) {
-    alert(exibirLista());
-    let itemRemover = prompt("Digite o nome exato do item que deseja remover:");
+  btnRemover.addEventListener('click', () => {
+    const comida = comidaInput.value.trim();
+    let removido = false;
 
-    let encontrado = false;
-    for (let categoria in listaDeCompras) {
-      let index = listaDeCompras[categoria].indexOf(itemRemover);
-      if (index !== -1) {
+    if (comida === '') {
+      mensagem.textContent = 'Por favor, insira o nome da comida que deseja remover.';
+      return;
+    }
+
+    for (const categoria in listaDeCompras) {
+      const index = listaDeCompras[categoria].indexOf(comida);
+      if (index > -1) {
         listaDeCompras[categoria].splice(index, 1);
-        encontrado = true;
-        alert(`🗑️ "${itemRemover}" foi removido da lista!`);
+        removido = true;
         break;
       }
     }
 
-    if (!encontrado) {
-      alert("❌ Não foi possível encontrar o item dentro da lista!");
+    if (removido) {
+      mensagem.textContent = `"${comida}" foi removido da lista.`;
+      comidaInput.value = '';
+      exibirLista();
+    } else {
+      mensagem.textContent = `"${comida}" não foi encontrado na lista.`;
+    }
+  });
+
+  btnExibir.addEventListener('click', () => {
+    exibirLista();
+  });
+
+  function exibirLista() {
+    listaFinal.innerHTML = '';
+    let listaVazia = true;
+
+    for (const categoria in listaDeCompras) {
+      if (listaDeCompras[categoria].length > 0) {
+        listaVazia = false;
+        const h3 = document.createElement('h3');
+        h3.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
+        const ul = document.createElement('ul');
+
+        listaDeCompras[categoria].forEach(item => {
+          const li = document.createElement('li');
+          li.textContent = item;
+          ul.appendChild(li);
+        });
+
+        listaFinal.appendChild(h3);
+        listaFinal.appendChild(ul);
+      }
+    }
+
+    if (listaVazia) {
+      mensagem.textContent = 'A lista de compras está vazia.';
     }
   }
-
-  else {
-    alert("⚠️ Opção inválida. Tente novamente.");
-  }
-}
+});
