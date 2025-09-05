@@ -1,0 +1,188 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilo geral */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Container principal */
+.container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 2rem;
+  color: #007bff;
+}
+
+/* Labels e inputs */
+label {
+  font-weight: 600;
+  display: block;
+  margin-top: 20px;
+  color: #555;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Botões */
+div {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  margin: 0 5px;
+}
+
+#btnAdicionar {
+  background-color: #28a745;
+  color: white;
+}
+
+#btnAdicionar:hover {
+  background-color: #218838;
+}
+
+#btnRemover {
+  background-color: #dc3545;
+  color: white;
+}
+
+#btnRemover:hover {
+  background-color: #c82333;
+}
+
+#btnExibir {
+  background-color: #007bff;
+  color: white;
+}
+
+#btnExibir:hover {
+  background-color: #0056b3;
+}
+
+/* Área de mensagem */
+#mensagem {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: 500;
+  color: #17a2b8;
+  min-height: 20px;
+}
+
+/* Área da lista */
+#listaFinal {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+#listaFinal h3 {
+  color: #007bff;
+  margin-top: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+#listaFinal ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+#listaFinal li {
+  background: #fff;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+  border-left: 4px solid #28a745;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  div {
+    flex-direction: column;
+  }
+}
