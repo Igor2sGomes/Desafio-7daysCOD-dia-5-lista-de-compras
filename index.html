@@ -2,37 +2,21 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="widht=device-wight,initial-scale 1.0">
-  <meta name="description" content="Lista de compras para supermercado">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lista de Compras</title>
-  <meta name="robots" content="index,foloow">
-  <meta name="author" content="Igor Gomes">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h2 {
-      color: #2c3e50;
-    }
-    select, input, button {
-      margin: 10px 0;
-      padding: 8px;
-      font-size: 16px;
-    }
-    .categoria {
-      margin-top: 20px;
-    }
-  </style>
 </head>
 <body>
-  <h2>🛒 Adicionar à Lista de Compras</h2>
+  <h2>🛒 Lista de Compras</h2>
 
-  <label for="comida">Nome da comida:</label><br>
-  <input type="text" id="comida" placeholder="Ex: batata"><br>
+  <!-- Input para adicionar item -->
+  <label for="comida">Nome da comida:</label>
+  <input type="text" id="comida" placeholder="Ex: batata">
 
-  <label for="categoria">Escolha a categoria:</label><br>
+  <!-- Select para categoria -->
+  <label for="categoria">Escolha a categoria:</label>
   <select id="categoria">
+    <option value="carnes">Carnes</option>
+    <option value="naoPereciveis">Não Perecíveis</option>
     <option value="frutas">Frutas</option>
     <option value="laticinios">Laticínios</option>
     <option value="congelados">Congelados</option>
@@ -40,53 +24,19 @@
     <option value="legumes">Legumes</option>
     <option value="bebidas">Bebidas</option>
     <option value="outros">Outros</option>
-  </select><br>
+  </select>
 
-  <button onclick="adicionarItem()">Adicionar</button>
-  <button onclick="exibirLista()">Finalizar e Exibir Lista</button>
+  <!-- Botões de ação -->
+  <div>
+    <button id="btnAdicionar">Adicionar</button>
+    <button id="btnRemover">Remover</button>
+    <button id="btnExibir">Exibir Lista</button>
+  </div>
 
-  <div id="listaFinal" class="categoria"></div>
+  <!-- Área para mensagens de confirmação ou erros -->
+  <p id="mensagem"></p>
 
-  <script>
-    const listaDeCompras = {
-      frutas: [],
-      laticinios: [],
-      congelados: [],
-      doces: [],
-      legumes: [],
-      bebidas: [],
-      outros: []
-    };
-
-    function adicionarItem() {
-      const comida = document.getElementById("comida").value.trim();
-      const categoria = document.getElementById("categoria").value;
-
-      if (comida === "") {
-        alert("Por favor, digite o nome da comida.");
-        return;
-      }
-
-      listaDeCompras[categoria].push(comida);
-      alert(`"${comida}" foi adicionada à categoria "${categoria}".`);
-      document.getElementById("comida").value = "";
-    }
-
-    function exibirLista() {
-      const listaDiv = document.getElementById("listaFinal");
-      listaDiv.innerHTML = "<h3>📋 Lista Final:</h3>";
-
-      for (let categoria in listaDeCompras) {
-        if (listaDeCompras[categoria].length > 0) {
-          let titulo = categoria.charAt(0).toUpperCase() + categoria.slice(1);
-          listaDiv.innerHTML += `<strong>${titulo}:</strong><ul>`;
-          listaDeCompras[categoria].forEach(item => {
-            listaDiv.innerHTML += `<li>${item}</li>`;
-          });
-          listaDiv.innerHTML += `</ul>`;
-        }
-      }
-    }
-  </script>
+  <!-- Área onde a lista será exibida -->
+  <div id="listaFinal"></div>
 </body>
 </html>
